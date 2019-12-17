@@ -15,7 +15,7 @@ uint8_t rtc_read(uint8_t address)
 {
 	uint8_t data;
 	
-	if(HAL_I2C_Mem_Read(&hi2c1,addr_ds1307,address,I2C_MEMADD_SIZE_8BIT,&data,1,100)!=HAL_OK){
+	if(HAL_I2C_Mem_Read(&hi2c1,addr_ds1307, address, I2C_MEMADD_SIZE_8BIT, &data, 1, 100)!=HAL_OK){
 		Error_Handler();
 	}
 	
@@ -41,7 +41,8 @@ void rtc_init(uint8_t rs,uint8_t sqwe,uint8_t out)
 void rtc_get_time(uint8_t *hour,uint8_t *min,uint8_t *sec)
 {
 	uint8_t data[3];
-	if(HAL_I2C_Mem_Read(&hi2c1,addr_ds1307,0x00,I2C_MEMADD_SIZE_8BIT,data,3,1000)!=HAL_OK){
+	if(HAL_I2C_Mem_Read(&hi2c1, addr_ds1307, 0x00, I2C_MEMADD_SIZE_8BIT, data, 3, 1000) != HAL_OK)
+	{
 		Error_Handler();
 	}	
 

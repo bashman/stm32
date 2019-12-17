@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "lcd_1602.h"
 #include "ds1307.h"
+#include "i2c-lcd.h"
 #include "string.h"
 #include "stdio.h"
 /* USER CODE END Includes */
@@ -106,12 +107,24 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   lcd_init();
-  lcd_clr();
-  lcd_puts("---");
+  HAL_Delay(10);
+  lcd_i2c_init();
+  HAL_Delay(10);
   rtc_init(0, 1, 0);
+
+  lcd_clr();
+  //lcd_i2c_clear();
+  lcd_puts("---");
+  //lcd_i2c_clear();
+
+//  lcd_i2c_clear();
+
+  lcd_i2c_send_string("ABCDEFGHIJKLMNO");
+
+
   HAL_Delay(2000);
 
-  //rtc_set_time(0, 0, 0);
+  //rtc_set_time(18, 5, 0);
   //rtc_set_date(1, 16, 12, 19);
 
 
@@ -125,12 +138,14 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  lcd_clr();
+	  lcd_i2c_send_cmd(0x01);
 	  rtc_get_time(&hour, &min, &sec);
 	  lcd_gotoxy(0, 0);
 
-	  lcd_puts("Ola k ase:");
+
 	  lcd_gotoxy(1, 0);
 	  sprintf(buffer, "HORA: %d:%d:%d", hour, min, sec);
+	  lcd_i2c_send_string(buffer);
 	  lcd_puts(buffer);
 	  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 
@@ -193,7 +208,7 @@ static void MX_I2C1_Init(void)
 
   /* USER CODE END I2C1_Init 1 */
   hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 400000;
+  hi2c1.Init.ClockSpeed = 100000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;

@@ -14,6 +14,7 @@
 "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.o"
 "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.o"
 "Src/ds1307.o"
+"Src/i2c-lcd.o"
 "Src/lcd_1602.o"
 "Src/main.o"
 "Src/stm32f1xx_hal_msp.o"
